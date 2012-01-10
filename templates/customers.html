@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>Customers</h2>
+<table class="condensed-table">
+ <thead>
+  <tr>
+    <th>ID</th>
+    <th>Email</th>
+    <th>Description</th>
+  </tr>
+</thead>
+<tbody>
+
+{% for customer in customers['data'] %}
+<tr>
+    <td>{{customer['id']}}</td>
+    <td>{{customer['email']}}</td>
+    <td>{{customer['description']}}</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}

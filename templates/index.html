@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block extra_scripts %}
+<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+
+<script type="text/javascript">
+    // this identifies your website in the createToken call below
+    Stripe.setPublishableKey('{{settings.STRIPE_PUB_KEY}}');
+
+    function stripeResponseHandler(status, response) {
+        if (response.error) {
+            //show the errors on the form
+            $(".hide").show()
+            $(".payment-errors").html(response.error.message);
+            $('.submit-button').attr("disabled", "");
+        } else {
+            var form$ = $("#payment-form");
+            // token contains id, last4, and card type
+            var token = response['id'];
+            // insert the token into the form so it gets submitted to the server
+            form$.append("<input type='hidden' name='token' value='" + token + "'/>");
+            // and submit
+            form$.get(0).submit();
+        }
+    }
+
+    $(document).ready(function() {
+      $(".hide").hide();
+      
+      $(".close").click(function(){
+        $(".hide").hide();          
+      });
+      
+      $("#payment-form").submit(function(event) {
+        // disable the submit button to prevent repeated clicks
+        $('.submit-button').attr("disabled", "disabled");
+
+//        var amount = 1000; //amount you want to charge in cents
+        Stripe.createToken({
+            number: $('.card-number').val(),
+            cvc: $('.card-cvc').val(),
+            exp_month: $('.card-expiry-month').val(),
+            exp_year: $('.card-expiry-year').val()
+        }, $("#amount").val(), stripeResponseHandler);
+
+        // prevent the form from submitting with the default action
+        return false;
+      });
+    });
+    
+</script>
+
+{% endblock %}
+
+{% block body %}
+<div class="alert-message error hide">
+      <a class="close" href="#">×</a>
+      <p class="payment-errors"></p>
+</div>
+<form action="/" method="POST" id="payment-form">
+    <fieldset>
+      <legend>Shopping Cart</legend>
+
+        <div class="clearfix">
+            <label>Customer Email</label>
+            <div class="input">
+                <input type="text" class="xlarge" name="email" value="djworth@gmail.com"/>
+            </div>
+        </div>
+        
+        <div class="clearfix">
+            <label>Amount</label>
+            <div class="input">
+                <div class="input-prepend">
+                    <span class="add-on">$</span>
+                    <input class="medium" id="amount" name="amount" size="6" type="text" /> 
+                </div>
+                <span class="help-block">Large numbers are better.</span>
+            </div>
+        </div>
+        
+        <div class="clearfix">
+            <label>Card Number</label>
+            <div class="input">
+                <input type="text" size="16" autocomplete="off" class="card-number" value="4242424242424242"/>
+            </div>
+        </div>
+        
+        <div class="clearfix">
+            <label>CVC</label>
+            <div class="input">
+                <input type="text" size="4" autocomplete="off" class="card-cvc"/>
+            </div>
+        </div>
+        
+        <div class="clearfix">
+            <label>Expiration (MM/YYYY)</label>
+            <div class="input">
+                <div class="inline-inputs">
+                    <input class="mini card-expiry-month" type="text" value="" />
+                    &nbsp;/&nbsp;
+                    <input class="mini card-expiry-year" type="text" value="" />
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn primary submit-button">Submit Payment</button>
+    </fieldset>
+</form>
+{% endblock %}

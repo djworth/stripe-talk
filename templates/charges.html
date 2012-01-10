@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>Charges</h2>
+<table class="condensed-table">
+ <thead>
+  <tr>
+    <th>ID</th>
+    <th>Amount</th>
+    <th>Fee</th>
+    <th>Paid</th>
+    <th>Refunded</th>
+  </tr>
+</thead>
+<tbody>
+
+{% for charge in charges['data'] %}
+<tr>
+    <td>{{charge['id']}}</td>
+    <td>{{charge['amount']}}</td>
+    <td>{{charge['fee']}}</td>
+    <td>{{charge['paid']}}</td>
+    <td>{{charge['refunded']}}</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %}

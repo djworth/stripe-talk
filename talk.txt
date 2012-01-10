@@ -1,0 +1,25 @@
+
+1 - Introduce Stripe (http://stripe.com)
+    - One Stop Shop for Payments
+    - Very Developer Friendly
+    - Client Libraries (Python, Ruby, PHP, Java, Javascript)
+
+2 - Lower Expectations on Speaker :)
+   - Stripe is Awesome
+   - Me not so much (first talk EVAR!)
+
+3 - Pricing
+   - Stripe 2.9% plus .30 cents per transactions
+      - PayPal - $30/month plus 2.9% + .30 cents per transactions
+   - Lowest Transaction amount .50 cents 
+   - **Need a US Bank Account but can except payments in other currencies
+
+4 - Features
+   - One-Off Transactions (like shopping carts)
+   - Subscriptions (like Software as a Service)
+      - Supports Monthly and Annually models
+   - Coupons are also supported
+   - Extremely Low Friction to getting started
+
+5 - Demo
+   - Yay Code!

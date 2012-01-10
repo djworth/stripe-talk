@@ -1,0 +1,11 @@
+Stripe Talk I gave at PUGIP (on 01/09/2012) - http://meetup.com/pug-ip join :)
+
+To get this running just do the following
+
+1. Rename settings.py.example and pop in your stipe keys (http://stripe.com)
+2. pip install -r requirements.txt #probably good idea to use virualenv
+3. python web.py
+4. open http://localhost:5000
+5. retire
+
+Enjoy!
